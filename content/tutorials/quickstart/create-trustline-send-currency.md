@@ -648,12 +648,9 @@ Update the form to support the new functions.
     <h1>Token Test Harness</h1>
     <form id="theForm">
       Choose your ledger instance:  
-      <input type="radio" id="xls" name="server"
-        value="wss://xls20-sandbox.rippletest.net:51233" checked>
-      <label for="xls20">XLS20-NFT</label>
       &nbsp;&nbsp;
       <input type="radio" id="tn" name="server"
-        value="wss://s.altnet.rippletest.net:51233">
+        value="wss://s.altnet.rippletest.net:51233" checked>
       <label for="testnet">Testnet</label>
       &nbsp;&nbsp;
       <input type="radio" id="dn" name="server"
@@ -723,7 +720,7 @@ Update the form to support the new functions.
                         Amount
                       </td>
                       <td>
-                        <input type="text" id="standbyAmountField" size="40" value="100"></input>
+                        <input type="text" id="standbyAmountField" size="40"></input>
                         <br>
                       </td>
                     </tr>
@@ -732,7 +729,7 @@ Update the form to support the new functions.
                         Destination
                       </td>
                       <td>
-                        <input type="text" id="standbyDestinationField" size="40" value="100"></input>
+	                        <input type="text" id="standbyDestinationField" size="40"></input>
                         <br>
                       </td>
                     </tr>
@@ -846,7 +843,7 @@ Update the form to support the new functions.
                               Amount
                             </td>
                             <td>
-                              <input type="text" id="operationalAmountField" size="40" value="100"></input>
+	                              <input type="text" id="operationalAmountField" size="40"></input>
                               <br>
                             </td>
                           </tr>

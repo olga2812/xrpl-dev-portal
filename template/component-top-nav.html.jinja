@@ -75,7 +75,7 @@
     <div class="nav-item search" id="topnav-search">
       <form class="navbar-form navbar-right" role="search">
         <div class="form-inline">
-          <div class="input-group">
+          <div class="input-group" id="topsearchboxcontainer">
             <label class="input-group-prepend" for="topsearchbox"><i class="fa fa-search input-group-text"></i><span class="sr-only">{% trans %}Search{% endtrans %}</span></label>
             <input id="topsearchbox" name="q" type="text" class="form-control searchinput" placeholder="{% trans %}Search site...{% endtrans %}">
           </div><!--/.input-group-->
@@ -83,7 +83,6 @@
       </form>
     </div><!--/#topnav-search-->
 
-<!--{#TEMPORARILY DISABLED: language selector (many common pages are mostly untranslated right now)
     <div class="nav-item" id="topnav-language">
       <div class="dropdown">
         <a class="nav-link dropdown-toggle with-caret" id="language_selector_header_btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,7 +100,6 @@
         </div><!--/.dropdown-menu-->
       </div><!--/.dropdown-->
     </div><!--/.language-selector-->
-#}-->
 
     {% if target.light_theme_enabled %}
     <div class="nav-item" id="topnav-theme">

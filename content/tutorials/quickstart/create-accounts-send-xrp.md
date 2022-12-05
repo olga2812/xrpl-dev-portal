@@ -10,9 +10,7 @@ labels:
 ---
 # 1. Create Accounts and Send XRP
 
-
 This example shows how to:
-
 
 
 1. Create accounts on the Testnet, funded with 10000 test XRP with no actual value. 
@@ -21,11 +19,7 @@ This example shows how to:
 
 When you create an account, you receive a public/private key pair offline. It does not appear on the ledger until it is funded with XRP. This example shows how to create accounts for Testnet, but not how to create an account that you can use on Mainnet.
 
-
-
 ![Token Test Harness](img/quickstart2.png)
-
-
 
 
 ## Prerequisites
@@ -47,7 +41,7 @@ To get test accounts:
 
 
 1. Open `1.get-accounts-send-xrp.html` in a browser
-2. Choose **NFT-Devnet**, **Testnet**, or **Devnet**.
+2. Choose **Testnet** or **Devnet**.
 3. Click **Get New Standby Account**.
 4. Click **Get New Operational Account.**
 5. Copy and paste the **Seeds** field in a persistent location, such as a Notepad, so that you can reuse the accounts after reloading the form.
@@ -80,13 +74,13 @@ You can download the [Quickstart Samples](https://github.com/XRPLF/xrpl-dev-port
 
 ## ripplex-1-send-xrp.js
 
-This example can be used with any XRP Ledger network. Currently, there are _Testnet_ and _Devnet,_ with the experimental _NFT-Devnet_ server with support for NFTokens. You can update the code to choose different or additional XRP Ledger networks.
+This example can be used with any XRP Ledger network, _Testnet_, or _Devnet_. You can update the code to choose different or additional XRP Ledger networks.
 
 
 ### getNet()
 
 
-```
+```javascript
 // ******************************************************
 // ************* Get the Preferred Network **************
 // ******************************************************   
@@ -98,9 +92,8 @@ This example can be used with any XRP Ledger network. Currently, there are _Test
 This function uses brute force `if` statements to discover the selected network instance and return the URI.
 
 
-```
+```javascript
         let net
-          if (document.getElementById("xls").checked) net = "wss://xls20-sandbox.rippletest.net:51233"
           if (document.getElementById("tn").checked) net = "wss://s.altnet.rippletest.net:51233"
           if (document.getElementById("dn").checked) net = "wss://s.devnet.rippletest.net:51233"
           return net
@@ -112,7 +105,7 @@ This function uses brute force `if` statements to discover the selected network 
 ### getAccount(type)              
 
 
-```
+```javascript
 // *******************************************************
 // ************* Get Account *****************************
 // *******************************************************
@@ -125,7 +118,7 @@ This function uses brute force `if` statements to discover the selected network 
 Get the selected ledger.
 
 
-```
+```javascript
       let net = getNet()
 ```
 
@@ -133,7 +126,7 @@ Get the selected ledger.
 Instantiate a client.
 
 
-```
+```javascript
       const client = new xrpl.Client(net)
 ```
 
@@ -141,16 +134,21 @@ Instantiate a client.
 Use the _results_ variable to capture progress information.
 
 
+```javascript
+        results = 'Connecting to ' + net + '....'
 ```
-        results = 'Connecting to ' + getNet() + '....'
-        const walletServer = net
+
+Use the default faucet using a _null_ value.
+
+```javascript
+        let faucetHost = null
 ```
 
 
 Report progress in the appropriate results field.
 
 
-```
+```javascript
         if (type == 'standby') {
           document.getElementById('standbyResultField').value = results
         } else {
@@ -162,7 +160,7 @@ Report progress in the appropriate results field.
 Connect to the server.
 
 
-```
+```javascript
         await client.connect()
 
 
@@ -178,7 +176,7 @@ Connect to the server.
 Create and fund a test account wallet.
 
 
-```
+```javascript
        const my_wallet = (await client.fundWallet(null, { faucetHost: walletServer})).wallet
 ```
 
@@ -186,9 +184,8 @@ Create and fund a test account wallet.
 Get the current XRP balance for the account.
 
 
-```
-        const my_balance = (await client.getXrpBalance(my_wallet.address))  
-
+```javascript
+        const my_balance = (await client.getXrpBalance(my_wallet.address)) 
 
 ```
 
@@ -196,9 +193,7 @@ Get the current XRP balance for the account.
 If this is a standby account, populate the standby account fields.
 
 
-```
-
-
+```javascript
         if (type == 'standby') {
           document.getElementById('standbyAccountField').value = my_wallet.address
           document.getElementById('standbyPubKeyField').value = my_wallet.publicKey
@@ -214,7 +209,7 @@ If this is a standby account, populate the standby account fields.
 Otherwise, populate the operational account fields.
 
 
-```
+```javascript
         } else {
           document.getElementById('operationalAccountField').value = my_wallet.address
           document.getElementById('operationalPubKeyField').value = my_wallet.publicKey
@@ -231,7 +226,7 @@ Otherwise, populate the operational account fields.
 Insert the seed values for both accounts as they are created to the **Seeds** field as a convenience. You can copy the values and store them offline. When you reload this form or another in this tutorial, copy and paste them into the **Seeds** field to retrieve the accounts with the `getAccountsFromSeeds()` function.
 
 
-```
+```javascript
         document.getElementById('seeds').value = standbySeedField.value + '\n' + operationalSeedField.value
 ```
 
@@ -249,7 +244,7 @@ Disconnect from the XRP ledger.
 ### Get Accounts from Seeds
 
 
-```
+```javascript
 // *******************************************************
 // ********** Get Accounts from Seeds ******************** 
 // *******************************************************
@@ -379,7 +374,6 @@ Connect to your selected ledger.
 
 
 ```
-
 
 Prepare the transaction. This is a Payment transaction from the standby wallet to the operational wallet.
 
@@ -520,10 +514,18 @@ For each of the transactions, there is an accompanying reciprocal transaction, w
 Create a standard HTML form to send transactions and requests, then display the results.  
 
 
-```
+```html
 <html>
   <head>
     <title>Token Test Harness</title>
+    <link href='https://fonts.googleapis.com/css?family=Work Sans' rel='stylesheet'>
+    <style>
+       body{font-family: "Work Sans", sans-serif;padding: 20px;background: #fafafa;}
+       h1{font-weight: bold;}
+       input, button {padding: 6px;margin-bottom: 8px;}
+       button{font-weight: bold;font-family: "Work Sans", sans-serif;}
+       td{vertical-align: middle;}
+    </style>
     <script src='https://unpkg.com/xrpl@2.2.3'></script>
     <script src='ripplex1-send-xrp.js'></script>
     <script>
@@ -542,12 +544,9 @@ Create a standard HTML form to send transactions and requests, then display the 
     <h1>Token Test Harness</h1>
     <form id="theForm">
       Choose your ledger instance:  
-      <input type="radio" id="xls" name="server"
-        value="wss://xls20-sandbox.rippletest.net:51233" checked>
-      <label for="xls20">XLS20-NFT</label>
       &nbsp;&nbsp;
       <input type="radio" id="tn" name="server"
-        value="wss://s.altnet.rippletest.net:51233">
+        value="wss://s.altnet.rippletest.net:51233" checked>
       <label for="testnet">Testnet</label>
       &nbsp;&nbsp;
       <input type="radio" id="dn" name="server"
@@ -617,7 +616,7 @@ Create a standard HTML form to send transactions and requests, then display the 
                         Amount
                       </td>
                       <td>
-                        <input type="text" id="standbyAmountField" size="40" value="100"></input>
+                        <input type="text" id="standbyAmountField" size="40"></input>
                         <br>
                       </td>
                     </tr>
@@ -626,7 +625,7 @@ Create a standard HTML form to send transactions and requests, then display the 
                         Destination
                       </td>
                       <td>
-                        <input type="text" id="standbyDestinationField" size="40" value="100"></input>
+                        <input type="text" id="standbyDestinationField" size="40"></input>
                         <br>
                       </td>
                     </tr>
@@ -712,7 +711,7 @@ Create a standard HTML form to send transactions and requests, then display the 
                               Amount
                             </td>
                             <td>
-                              <input type="text" id="operationalAmountField" size="40" value="100"></input>
+                              <input type="text" id="operationalAmountField" size="40"></input>
                               <br>
                             </td>
                           </tr>
@@ -721,7 +720,7 @@ Create a standard HTML form to send transactions and requests, then display the 
                               Destination
                             </td>
                             <td>
-                              <input type="text" id="operationalDestinationField" size="40" value="100"></input>
+                              <input type="text" id="operationalDestinationField" size="40"></input>
                               <br>
                             </td>
                           </tr>
